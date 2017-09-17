@@ -4,7 +4,7 @@ import random
 
 def subreddit_random(sr):
   headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
-  url = "https://www.reddit.com/r/%s.json" % sr
+  url = "https://www.reddit.com/r/%s.json?limit=100" % sr
   try:
     response = requests.get(url, headers=headers)
     posts = map(lambda x: x['data'],  response.json()['data']['children'])
