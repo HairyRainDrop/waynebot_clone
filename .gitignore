@@ -1,0 +1,4 @@
+*.swp
+*.yaml
+*.pyc
+plugins/trello.py

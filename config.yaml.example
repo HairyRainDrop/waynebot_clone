@@ -1,0 +1,9 @@
+token: ''
+auth_users:
+  - 1
+  - 2
+auth_chats:
+  - -99
+cmd_whitelist: 
+  - foo
+  - bar
