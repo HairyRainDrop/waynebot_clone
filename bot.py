@@ -6,6 +6,7 @@ import importlib
 import glob
 import inspect
 import yaml
+import datetime
 from functools import wraps
 
 config_file = 'config.yaml'
@@ -29,6 +30,13 @@ def restricted(func):
         return func(bot, update, *args, **kwargs)
     return wrapped
 
+def age_filter(message):
+    """Keep missed/old updates from triggering a ton of responses"""
+    now_ts = datetime.datetime.now()
+    message_ts = message.date
+    diff_secs = abs((now_ts - message_ts).total_seconds())
+    return diff_secs < 45
+
 updater = Updater(config['token'])
 dispatcher = updater.dispatcher
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -37,7 +45,7 @@ def add_command(name, func, protected=True):
     print 'Adding command: %s' % name
     if protected and (len(auth_users) > 0 or len(auth_chats) > 0):
       func = restricted(func)
-    handler = CommandHandler(name, func, pass_args=True)
+    handler = CommandHandler(name, func, pass_args=True, filters=age_filter)
     dispatcher.add_handler(handler)
 
 def start(bot, update, args):
