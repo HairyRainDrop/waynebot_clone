@@ -12,7 +12,13 @@ from functools import wraps
 config_file = 'config.yaml'
 if len(sys.argv) > 1:
   config_file = sys.argv[1]
-config = yaml.load(open(config_file, 'r'))
+try:
+    config = yaml.load(open(config_file, 'r'))
+except:
+    config = {
+      'token': os.environ['TELEGRAM_TOKEN']
+    }
+
 cmd_whitelist = config.get('cmd_whitelist', [])
 chat_whitelist = config.get('chat_whitelist', [])
 
@@ -52,7 +58,7 @@ dispatcher = updater.dispatcher
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 def add_command(name, func, protected=True):
-    print 'Adding command: %s' % name
+    print('Adding command: %s' % name)
     if protected and len(chat_whitelist) > 0:
       func = restricted(func)
     handler = CommandHandler(name, func, pass_args=True, filters=age_filter)
@@ -85,7 +91,7 @@ for fn in glob.glob("plugins/*.py"):
                         cmd_register[cmd_name] = fn.__doc__
                         add_command(cmd_name, fn)
                 else:
-                    print 'Duplicate command name: %s' % cmd_name
+                    print('Duplicate command name: %s' % cmd_name)
                     sys.exit(-1)
 
 cmd_help = []
