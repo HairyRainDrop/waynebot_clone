@@ -7,8 +7,8 @@ def subreddit_random(sr):
   url = "https://www.reddit.com/r/%s.json?limit=100" % sr
   try:
     response = requests.get(url, headers=headers)
-    posts = map(lambda x: x['data'],  response.json()['data']['children'])
-    imgs = filter(lambda x: x['url'].endswith('.jpg') or x['url'].endswith('.png') or x['url'].endswith('.gif'), posts)
+    posts = list(map(lambda x: x['data'],  response.json()['data']['children']))
+    imgs = list(filter(lambda x: x['url'].endswith('.jpg') or x['url'].endswith('.png') or x['url'].endswith('.gif'), posts))
     return random.choice(imgs)['url']
   except Exception as e:
     print("Error retrieving subreddit: %s" % e)
