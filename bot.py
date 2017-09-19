@@ -14,6 +14,8 @@ if len(sys.argv) > 1:
   config_file = sys.argv[1]
 config = yaml.load(open(config_file, 'r'))
 cmd_whitelist = config.get('cmd_whitelist', [])
+chat_whitelist = config.get('chat_whitelist', [])
+
 auth_users = config.get('auth_users', [])
 auth_chats = config.get('auth_chats', [])
 
@@ -23,6 +25,14 @@ def restricted(func):
         user_id = update.effective_user.id
         chat_id = update.message.chat_id
         allowed = user_id in auth_users or chat_id in auth_chats
+
+        allowed = False
+        if len(chat_whitelist) == 0:
+            allowed = True
+        else:
+            if user_id in chat_whitelist or chat_id in chat_whitelist:
+                allowed = True
+
         if not allowed:
             bot.leave_chat(chat_id)
             print("Access Denied.")
@@ -43,7 +53,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 def add_command(name, func, protected=True):
     print 'Adding command: %s' % name
-    if protected and (len(auth_users) > 0 or len(auth_chats) > 0):
+    if protected and len(chat_whitelist) > 0:
       func = restricted(func)
     handler = CommandHandler(name, func, pass_args=True, filters=age_filter)
     dispatcher.add_handler(handler)
