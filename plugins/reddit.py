@@ -11,6 +11,7 @@ def subreddit_random(sr):
     imgs = filter(lambda x: x['url'].endswith('.jpg') or x['url'].endswith('.png') or x['url'].endswith('.gif'), posts)
     return random.choice(imgs)['url']
   except Exception as e:
+    print("Error retrieving subreddit: %s" % e)
     return None
 
 def reddit_cmd(bot, update, args):
