@@ -16,6 +16,7 @@ if len(sys.argv) > 1:
 try:
     config = yaml.load(open(config_file, 'r'))
 except:
+    print("Couldn't find config yaml, attempting to use env variables")
     config = {
       'token': os.environ['TELEGRAM_TOKEN']
     }
@@ -23,15 +24,11 @@ except:
 cmd_whitelist = config.get('cmd_whitelist', [])
 chat_whitelist = config.get('chat_whitelist', [])
 
-auth_users = config.get('auth_users', [])
-auth_chats = config.get('auth_chats', [])
-
 def restricted(func):
     @wraps(func)
     def wrapped(bot, update, *args, **kwargs):
         user_id = update.effective_user.id
         chat_id = update.message.chat_id
-        allowed = user_id in auth_users or chat_id in auth_chats
 
         allowed = False
         if len(chat_whitelist) == 0:
