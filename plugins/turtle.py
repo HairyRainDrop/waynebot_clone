@@ -2,8 +2,7 @@ import sys
 
 import requests
 
-
-def turtle_price(trtl_amount):
+def get_turtle_price(trtl_amount):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
     url = "https://trtl.y4ht.se/convert?trtl={amt}".format(amt=trtl_amount)
@@ -27,17 +26,16 @@ def turtle_price(trtl_amount):
         return msg
 
 
-def turtle_cmd(bot, update, args):
+def trtl_cmd(bot, update, args):
     """/trtl <trtl_amount>: Get the current price of TurtleCoin"""
-    trtl_amt = 1
+    trtl_amount = 1
     if args is not None and len(args) > 0:
-        trtl_amt = args[0]
+        trtl_amount = args[0]
     try:
-        print(amount)
-        amount_int = int(amount)
-        msg = self.get_turtle_price(amount_int)
+        print(trtl_amount)
+        amount_int = int(trtl_amount)
+        msg = get_turtle_price(trtl_amount)
     except BaseException as e:
         print(e)
         msg = "Please only pass in integers greater than 0"
-    trtl_price_string = turtle_price(trtl_amount)
-    bot.send_message(chat_id=update.message.chat_id, text=trtl_price_string)
+    bot.send_message(chat_id=update.message.chat_id, text=msg)
