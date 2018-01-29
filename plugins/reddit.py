@@ -27,6 +27,7 @@ def reddit_cmd(bot, update, args):
 subreddits = [ #TODO add to yaml or something
   'hmm',
   'aww',
+  'natureismetal',
 ]
 
 thismodule = sys.modules[__name__]
