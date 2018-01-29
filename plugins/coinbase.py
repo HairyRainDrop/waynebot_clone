@@ -21,7 +21,7 @@ def coinbase_cmd(bot, update, args):
     if args is not None and len(args) > 0:
         coin = args[0]
     try:
-        print(coin)
+        ##print(coin)
         amount_int = int(coin)
         msg = coinbase(bot, update, coin)
     except BaseException as e:
