@@ -1,3 +1,5 @@
+import requests
+
 def coinbase(bot, update, coin):
     coin = coin.upper().replace(" ", "")
     if coin not in ('LTC', 'BTC', 'ETH'):
