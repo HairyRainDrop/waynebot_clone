@@ -2,6 +2,7 @@ import requests
 import sys
 
 def coinbase(bot, update, coin):
+    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
     coin = coin.upper().replace(" ", "")
     if coin not in ('LTC', 'BTC', 'ETH'):
         bot.send_message(chat_id=update.message.chat_id, "Please specify BTC, LTC, or ETH.", True)
