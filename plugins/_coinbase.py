@@ -14,4 +14,16 @@ def coinbase(bot, update, coin):
             msg = "%s is currently at $%s." % (coin, price)
         except:
             msg = "Sorry there was a problem retrieving the information."
-        bot.send_message(chat_id=update.message.chat_id, msg, True)  
+        bot.send_message(chat_id=update.message.chat_id, msg, True) 
+        
+def coinbase_cmd(bot, update, args):
+    """/coinbase <coin>: Show price of selected cyrptocurrency"""
+    if args is not None and len(args) > 0:
+        coin = args[0]
+    try:
+        #
+        #
+    except BaseException as e:
+        print(e)
+        msg = "Please use integers greater than 0"
+    bot.send_message(chat_id=update.message.chat_id, text=msg)
