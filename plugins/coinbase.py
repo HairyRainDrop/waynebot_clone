@@ -1,4 +1,4 @@
-def coinbase(bot, message, coin):
+def coinbase(bot, update, coin):
     coin = coin.upper().replace(" ", "")
     if coin not in ('LTC', 'BTC', 'ETH'):
         bot.send_message(chat_id=update.message.chat_id, "Please specify BTC, LTC, or ETH.", True)
